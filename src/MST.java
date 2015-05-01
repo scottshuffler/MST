@@ -7,9 +7,15 @@ import java.util.Scanner;
 
 /**
  * Created by shuffleres on 5/1/2015.
+ * Scott Shuffler
+ * Devin Sink
  */
 public class MST {
 
+    //Main method
+    //Makes a file object for graph1.dat
+    //Inits i, j, weight, numEdge, numVert, mst, and edge
+    //Creates a new Arraylist of Edges, Edges are populated with the i, j, and weight from file
     public static void main(String[] args) {
         File file = new File("graph1.dat");
         int i = 0;
@@ -24,34 +30,36 @@ public class MST {
             Scanner scanner = new Scanner(file);
             numEdge = scanner.nextInt();
             numVert = scanner.nextInt();
+            //Parses file and sets appropriate variable
             while (scanner.hasNextInt()) {
                 for (int count = 0; count < 3; count++) {
-                    if (count == 0){
+                    if (count == 0) {
                         i = scanner.nextInt();
-                    }
-                    else if(count == 1) {
+                    } else if (count == 1) {
                         j = scanner.nextInt();
-                    }
-                    else {
+                    } else {
                         weight = scanner.nextInt();
                     }
                 }
-                edge = new Edge(i,j,weight);
-                System.out.println("i: "+edge.getI()+" j: "+edge.getJ()+" w: "+edge.getWeight());
+                //Creates the edge for the 3 variables and adds to list
+                edge = new Edge(i, j, weight);
                 list.add(edge);
             }
-            System.out.println("Number of edges"+numEdge);
-            System.out.println("Number of vertices: " + numVert);
             scanner.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        //Creates a temp array list that is populated by the return result of kruskals
+        //Prints the weights of the selected edges
         ArrayList<Edge> temp = mst.kruskal(list, numVert);
         for (int ij = 0; ij < temp.size(); ij++) {
-            System.out.println(temp.get(ij).getWeight());
+            System.out.print(temp.get(ij).getWeight());
+            System.out.print(" ");
         }
     }
 
+    //Kruskals algorithm found on page 399 of the text book
+    //Data Structures and algorithm analysis in java -- third edition
     ArrayList<Edge> kruskal( List<Edge> edges, int numVertices )
     {
         DisjointSets ds = new DisjointSets( numVertices );
@@ -61,7 +69,6 @@ public class MST {
         {
             Edge e = pq.poll(); // Edge e = (u, v)
             if (e != null) {
-                System.out.println("NO NULL");
                 int uset = ds.find(e.getI());
                 int vset = ds.find(e.getJ());
                 if (uset != vset) {

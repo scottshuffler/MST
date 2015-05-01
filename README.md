@@ -1,2 +1,2 @@
 # MST
-MST Kruskals with disjoined set and priority queues
+MST Kruskals with disjoined sets and priority queues
